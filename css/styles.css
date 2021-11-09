@@ -38,6 +38,15 @@ body {
         color: white;
     }
 
+    #dialog-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Fira Mono', monospace;
+        font-size: 1rem;
+        color: white;
+    }
+
     #dialog-footer {
         display: flex;
         justify-content: flex-end;

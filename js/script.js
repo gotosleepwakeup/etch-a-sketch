@@ -1,4 +1,6 @@
+// query selectors
 let wrapper = document.querySelector('#wrapper');
+let dialogContent = document.querySelector('#dialog-content');
 
 function hoverSquare() {
     this.classList.add('square-hover');
@@ -21,3 +23,29 @@ for (let i = 0; i < 16; i++) {
         square.addEventListener('mouseover', hoverSquare);
     }
 }
+
+let outputNum = "";
+function writeNumber(e) {
+    // TODO: maximum 100
+    // TODO: no leading 0's
+    // TODO: animate numbers in
+    // TODO: backspace to remove a number
+    // TODO: flashy animation on grid as a preview of grid size
+    let inputNum = +e.key;
+    
+    if (inputNum >= 0 && inputNum <= 9) {
+        if (outputNum.length < 3) {
+            outputNum = outputNum + e.key;
+            dialogContent.textContent = outputNum;
+        }
+    }
+
+    if (e.key == "Backspace" && outputNum.length != 0) {
+        outputNum = outputNum.slice(0, -1);
+        dialogContent.textContent = outputNum;
+    }
+    console.log(e.key);
+}
+
+// keypress events
+document.addEventListener('keydown', writeNumber);
