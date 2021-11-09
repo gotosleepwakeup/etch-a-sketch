@@ -32,17 +32,29 @@ function writeNumber(e) {
     // TODO: backspace to remove a number
     // TODO: flashy animation on grid as a preview of grid size
     let inputNum = +e.key;
-    
+
+    if (outputNum.length == 0 && inputNum == 0) {
+        return;
+    }
+
     if (inputNum >= 0 && inputNum <= 9) {
-        if (outputNum.length < 3) {
-            outputNum = outputNum + e.key;
-            dialogContent.textContent = outputNum;
-        }
+        
+            if (outputNum.length < 3) {
+                outputNum = outputNum + e.key;
+                dialogContent.textContent = outputNum;
+                dialogContent.classList.add("dialog-large-numbers");
+            }
+        
     }
 
     if (e.key == "Backspace" && outputNum.length != 0) {
         outputNum = outputNum.slice(0, -1);
         dialogContent.textContent = outputNum;
+    }
+
+    if (outputNum.length == 0) {
+        dialogContent.textContent = "Type any number between 1 and 100."
+        dialogContent.classList.remove("dialog-large-numbers");
     }
     console.log(e.key);
 }
