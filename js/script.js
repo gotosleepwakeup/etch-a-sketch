@@ -27,7 +27,6 @@ for (let i = 0; i < 16; i++) {
 let outputNum = "";
 function writeNumber(e) {
     // TODO: maximum 100
-    // TODO: no leading 0's
     // TODO: animate numbers in
     // TODO: backspace to remove a number
     // TODO: flashy animation on grid as a preview of grid size
@@ -40,9 +39,16 @@ function writeNumber(e) {
     if (inputNum >= 0 && inputNum <= 9) {
         
             if (outputNum.length < 3) {
+                let holdNum = outputNum;
                 outputNum = outputNum + e.key;
-                dialogContent.textContent = outputNum;
-                dialogContent.classList.add("dialog-large-numbers");
+                if (+outputNum > 100) {
+                    console.log('NO');
+                    outputNum = holdNum;
+                    return;
+                } else {
+                    dialogContent.textContent = outputNum;
+                    dialogContent.classList.add("dialog-large-numbers");
+                }
             }
         
     }
