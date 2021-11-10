@@ -3,8 +3,9 @@ let wrapper = document.querySelector('#wrapper');
 let dialog = document.querySelector('#dialog');
 let dialogContent = document.querySelector('#dialog-content');
 let overlay = document.querySelector('#overlay');
+let clearBtn = document.querySelector('#clear-grid');
 let editGridBtn = document.querySelector('#edit-grid');
-let cancelBtn = document.querySelector('#dialog-cancel');
+/* let cancelBtn = document.querySelector('#dialog-cancel'); */
 let okBtn = document.querySelector('#dialog-ok');
 
 let rows = [];
@@ -14,6 +15,7 @@ let dialogIsOpen = false;
 function hoverSquare() {
     this.classList.add('square-hover');
 }
+
 
 function createGrid(resolution) {
     wrapper.innerHTML = '';
@@ -37,7 +39,7 @@ function createGrid(resolution) {
         }
     }
 }
-createGrid(1);
+createGrid(100);
 
 
 console.log(rows);
@@ -53,10 +55,23 @@ function randomizeSquares() {
     });
 }
 
+function clearSquares() {
+    squares = squares.sort((a, b) => 0.5 - Math.random());
+    
+    var delayInMilliseconds = 1;
+
+    squares.forEach(square => {
+        setTimeout(function () {
+            square.classList.remove('square-hover');
+        }, delayInMilliseconds);
+        
+    });
+}
+
 let outputNum = "";
 function writeNumber(e) {
     // TODO: animate numbers in
-    // TODO: flashy animation on grid as a preview of grid size
+    // TODO: disallow spacebar between numbers
     let inputNum = +e.key;
 
     // disallow leading zeros
@@ -67,6 +82,7 @@ function writeNumber(e) {
     // restrict numbers to only 0-9
     if (inputNum >= 0 && inputNum <= 9) {
 
+        console.log(inputNum);
         // disallow length greater than 3
         if (outputNum.length < 3) {
             let holdNum = outputNum;
@@ -112,16 +128,25 @@ function openDialog() {
 }
 
 function closeDialog() {
-    dialogIsOpen = true;
+    console.log('CLOSING TIME');
+    clearSquares();
+    dialogIsOpen = false;
     overlay.classList.remove('overlay-fade-in');
     overlay.classList.add('overlay-fade-out');
     dialog.classList.remove('dialog-fade-in');
     dialog.classList.add('dialog-fade-out');
 }
 
+function enterClose(e) {
+    if (e.key == "Enter" && dialogIsOpen == true) {
+        closeDialog();
+    }
+}
 
 // keypress events
 document.addEventListener('keydown', writeNumber);
+document.addEventListener('keydown', enterClose);
+clearBtn.addEventListener('click', clearSquares);
 editGridBtn.addEventListener('click', openDialog);
-cancelBtn.addEventListener('click', closeDialog);
+/* cancelBtn.addEventListener('click', closeDialog); */
 okBtn.addEventListener('click', closeDialog);

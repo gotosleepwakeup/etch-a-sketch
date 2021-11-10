@@ -105,6 +105,10 @@ body {
 }
 
     #edit-grid {
+        margin-left: 20px;
+    }
+
+    #clear-grid {
         margin-left: auto;
     }
 
