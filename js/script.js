@@ -1,8 +1,15 @@
 // query selectors
 let wrapper = document.querySelector('#wrapper');
+let dialog = document.querySelector('#dialog');
 let dialogContent = document.querySelector('#dialog-content');
+let overlay = document.querySelector('#overlay');
+let editGridBtn = document.querySelector('#edit-grid');
+let cancelBtn = document.querySelector('#dialog-cancel');
+let okBtn = document.querySelector('#dialog-ok');
+
 let rows = [];
 let squares = [];
+let dialogIsOpen = false;
 
 function hoverSquare() {
     this.classList.add('square-hover');
@@ -81,9 +88,12 @@ function writeNumber(e) {
 
     }
 
+    // backspace the number
     if (e.key == "Backspace" && outputNum.length != 0) {
         outputNum = outputNum.slice(0, -1);
         dialogContent.textContent = outputNum;
+        createGrid(+outputNum);
+        randomizeSquares();
     }
 
     if (outputNum.length == 0) {
@@ -93,5 +103,25 @@ function writeNumber(e) {
     console.log(e.key);
 }
 
+function openDialog() {
+    dialogIsOpen = true;
+    overlay.classList.remove('overlay-fade-out');
+    overlay.classList.add('overlay-fade-in');
+    dialog.classList.remove('dialog-fade-out');
+    dialog.classList.add('dialog-fade-in');
+}
+
+function closeDialog() {
+    dialogIsOpen = true;
+    overlay.classList.remove('overlay-fade-in');
+    overlay.classList.add('overlay-fade-out');
+    dialog.classList.remove('dialog-fade-in');
+    dialog.classList.add('dialog-fade-out');
+}
+
+
 // keypress events
 document.addEventListener('keydown', writeNumber);
+editGridBtn.addEventListener('click', openDialog);
+cancelBtn.addEventListener('click', closeDialog);
+okBtn.addEventListener('click', closeDialog);
