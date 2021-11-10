@@ -18,7 +18,11 @@
     <div id="overlay" class="overlay-fade-out">
         <div id="dialog" class="dialog-fade-out">
             <div id="dialog-header">Edit Grid</div>
-            <div id="dialog-content" div class="dialog-text">Type any number between 1 and 100.</div>
+            <div id="dialog-content" class="dialog-text">
+
+                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+
+            </div>
             <div id="dialog-footer">
                 <!-- <button id="dialog-cancel" class="pixel-button">Cancel</button> -->
                 <button id="dialog-ok" class="pixel-button">OK</button>
@@ -26,7 +30,7 @@
         </div>
     </div>
     <div id="header">
-        Pixelmaker 5.2 
+        Pixelmaker 5.2
         <button id="clear-grid" class="pixel-button">Clear</button>
         <button id="edit-grid" class="pixel-button">Edit Grid</button>
     </div>
