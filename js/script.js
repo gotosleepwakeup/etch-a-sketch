@@ -10,7 +10,9 @@ let okBtn = document.querySelector('#dialog-ok');
 
 let rows = [];
 let squares = [];
+
 let dialogIsOpen = false;
+let canType = true;
 
 function hoverSquare() {
     this.classList.add('square-hover');
@@ -64,8 +66,14 @@ function clearSquares() {
         setTimeout(function () {
             square.classList.remove('square-hover');
         }, delayInMilliseconds);
-        
     });
+}
+
+function delayTyping() {
+    canType = false;
+    setTimeout(function () {
+        canType = true;
+    }, 200);
 }
 
 let outputNum = "";
