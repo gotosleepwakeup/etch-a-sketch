@@ -40,6 +40,7 @@ body {
 
     #dialog-content {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         font-family: 'Fira Mono', monospace;
@@ -48,6 +49,11 @@ body {
     .dialog-text {
         font-size: 1rem;
         color: white;
+    }
+
+    #dialog-status-text {
+        margin-top:48px;
+        font-size: 6rem;
     }
 
     .dialog-large-numbers {

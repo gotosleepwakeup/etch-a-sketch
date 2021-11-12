@@ -1,27 +1,35 @@
+// TODO: reinstate cancel on dialog
+// TODO: rainbow color mode toggle
+// TODO: fluctuate opacity up/down mode toggle
+// TODO: trace history button (store one, in order - button to replay? replay mode?)
+
 // query selectors
 let wrapper = document.querySelector('#wrapper');
-let dialog = document.querySelector('#dialog');
-let dialogContent = document.querySelector('#dialog-content');
-let overlay = document.querySelector('#overlay');
 let clearBtn = document.querySelector('#clear-grid');
 let editGridBtn = document.querySelector('#edit-grid');
-/* let cancelBtn = document.querySelector('#dialog-cancel'); */
+let overlay = document.querySelector('#overlay');
+let dialog = document.querySelector('#dialog');
+let dialogContent = document.querySelector('#dialog-content');
+let dialogStatus = document.querySelector('#dialog-status-text');
+let slider = document.querySelector('#dialog-range-slider');
 let okBtn = document.querySelector('#dialog-ok');
+/* let cancelBtn = document.querySelector('#dialog-cancel'); */
 
 let rows = [];
 let squares = [];
 
 let dialogIsOpen = false;
-let canType = true;
+let resolution = 50;
+
 
 function hoverSquare() {
     this.classList.add('square-hover');
 }
 
 
-function createGrid(resolution) {
+function createGrid(newResolution) {
     wrapper.innerHTML = '';
-    for (let i = 0; i < resolution; i++) {
+    for (let i = 0; i < newResolution; i++) {
 
         // creates rows
         let row = document.createElement('div');
@@ -30,7 +38,7 @@ function createGrid(resolution) {
         rows.push(row);
     
         // creates squares for each row
-        for (let j = 0; j < resolution; j++) {
+        for (let j = 0; j < newResolution; j++) {
             let square = document.createElement('div');
             square.className = 'square';
             row.appendChild(square);
@@ -40,12 +48,10 @@ function createGrid(resolution) {
             square.addEventListener('mouseover', hoverSquare);
         }
     }
+    resolution = newResolution;
 }
-createGrid(100);
+createGrid(resolution);
 
-
-console.log(rows);
-console.log(squares);
 
 function randomizeSquares() {
     squares.forEach(square => {
@@ -56,6 +62,7 @@ function randomizeSquares() {
         }
     });
 }
+
 
 function clearSquares() {
     squares = squares.sort((a, b) => 0.5 - Math.random());
@@ -69,30 +76,19 @@ function clearSquares() {
     });
 }
 
-function delayTyping() {
-    canType = false;
-    setTimeout(function () {
-        canType = true;
-    }, 200);
-}
-
-let outputNum = "";
-
-/* dialogContent.textContent = outputNum;
-dialogContent.classList.add("dialog-large-numbers");
-createGrid(+outputNum);
-randomizeSquares(); */
 
 function openDialog() {
     dialogIsOpen = true;
+    slider.value = resolution;
+    dialogStatus.textContent = resolution;
     overlay.classList.remove('overlay-fade-out');
     overlay.classList.add('overlay-fade-in');
     dialog.classList.remove('dialog-fade-out');
     dialog.classList.add('dialog-fade-in');
 }
 
+
 function closeDialog() {
-    console.log('CLOSING TIME');
     clearSquares();
     dialogIsOpen = false;
     overlay.classList.remove('overlay-fade-in');
@@ -101,15 +97,30 @@ function closeDialog() {
     dialog.classList.add('dialog-fade-out');
 }
 
-function enterClose(e) {
+
+function pressEnterToClose(e) {
     if (e.key == "Enter" && dialogIsOpen == true) {
         closeDialog();
     }
 }
 
+
+function onSliderMove(e) {
+    dialogStatus.textContent = e.srcElement.valueAsNumber;
+}
+
+
+function onSliderRelease(e) {
+    createGrid(e.srcElement.value);
+    randomizeSquares();
+}
+
+
 // keypress events
-document.addEventListener('keydown', enterClose);
+document.addEventListener('keydown', pressEnterToClose);
 clearBtn.addEventListener('click', clearSquares);
 editGridBtn.addEventListener('click', openDialog);
-/* cancelBtn.addEventListener('click', closeDialog); */
+slider.addEventListener('input', onSliderMove);
+slider.addEventListener('change', onSliderRelease);
 okBtn.addEventListener('click', closeDialog);
+/* cancelBtn.addEventListener('click', closeDialog); */
