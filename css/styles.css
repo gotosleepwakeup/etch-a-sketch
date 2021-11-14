@@ -142,6 +142,7 @@ body {
     width: 48px;
     height: 28px;
     border: 2px solid white;
+    margin-left: auto;
   }
   
   /* Hide default HTML checkbox */
@@ -177,6 +178,13 @@ body {
     -webkit-transition: .1s;
     transition: .1s;
   }
+
+  .switch-label {
+    font-family: 'Fira Mono', monospace;
+    font-size: 1rem;
+    color: white;
+    margin-left:10px;
+  }
   
   input:checked + .switch-slider:before {
     background-color: white;
@@ -193,7 +201,7 @@ body {
     }
 
     #clear-grid {
-        margin-left: auto;
+        margin-left: 40px;
     }
 
 #wrapper {

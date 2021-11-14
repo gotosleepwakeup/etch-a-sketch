@@ -25,12 +25,16 @@ let rainbowModeIsToggled = false;
 
 
 function hoverSquare() {
-    //this.classList.add('square-hover');
-    this.style.backgroundColor = `hsla(${currentHue}, 100%, 50%, 1)`;
-    if (currentHue < 360) {
-        currentHue += 1;
-    } else {
-        currentHue = 0;
+    if (rainbowModeIsToggled == false) {
+        this.removeAttribute('style');
+        this.classList.add('square-hover');
+    } else if (rainbowModeIsToggled == true){
+        this.style.backgroundColor = `hsla(${currentHue}, 100%, 50%, 1)`;
+        if (currentHue < 360) {
+            currentHue += 1;
+        } else {
+            currentHue = 0;
+        }
     }
 }
 
@@ -78,6 +82,7 @@ function clearSquares() {
 
     squares.forEach(square => {
         setTimeout(function () {
+            square.removeAttribute('style');
             square.classList.remove('square-hover');
         }, delayInMilliseconds);
     });
