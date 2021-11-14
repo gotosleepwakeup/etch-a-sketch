@@ -1,6 +1,4 @@
-// TODO: reinstate cancel on dialog
 // TODO: rainbow color mode toggle
-// TODO: fluctuate opacity up/down mode toggle
 // TODO: trace history button (store one, in order - button to replay? replay mode?)
 
 // query selectors
@@ -13,7 +11,8 @@ let dialogContent = document.querySelector('#dialog-content');
 let dialogStatus = document.querySelector('#dialog-status-text');
 let slider = document.querySelector('#dialog-range-slider');
 let okBtn = document.querySelector('#dialog-ok');
-/* let cancelBtn = document.querySelector('#dialog-cancel'); */
+let cancelBtn = document.querySelector('#dialog-cancel');
+let rainbowSwitch = document.querySelector('#rainbow-switch');
 
 let rows = [];
 let squares = [];
@@ -21,11 +20,19 @@ let squares = [];
 let dialogIsOpen = false;
 let resolution = 50;
 
+let currentHue = 0;
+let rainbowModeIsToggled = false;
+
 
 function hoverSquare() {
-    this.classList.add('square-hover');
+    //this.classList.add('square-hover');
+    this.style.backgroundColor = `hsla(${currentHue}, 100%, 50%, 1)`;
+    if (currentHue < 360) {
+        currentHue += 1;
+    } else {
+        currentHue = 0;
+    }
 }
-
 
 function createGrid(newResolution) {
     wrapper.innerHTML = '';
@@ -97,6 +104,14 @@ function closeDialog() {
     dialog.classList.add('dialog-fade-out');
 }
 
+function cancelDialog() {
+    dialogIsOpen = false;
+    overlay.classList.remove('overlay-fade-in');
+    overlay.classList.add('overlay-fade-out');
+    dialog.classList.remove('dialog-fade-in');
+    dialog.classList.add('dialog-fade-out');
+}
+
 
 function pressEnterToClose(e) {
     if (e.key == "Enter" && dialogIsOpen == true) {
@@ -115,6 +130,15 @@ function onSliderRelease(e) {
     randomizeSquares();
 }
 
+function toggleRainbowMode() {
+    if (this.checked == true) {
+        rainbowModeIsToggled = true;
+    } else {
+        rainbowModeIsToggled = false;
+    }
+    console.log(rainbowModeIsToggled);
+}
+
 
 // keypress events
 document.addEventListener('keydown', pressEnterToClose);
@@ -123,4 +147,5 @@ editGridBtn.addEventListener('click', openDialog);
 slider.addEventListener('input', onSliderMove);
 slider.addEventListener('change', onSliderRelease);
 okBtn.addEventListener('click', closeDialog);
-/* cancelBtn.addEventListener('click', closeDialog); */
+cancelBtn.addEventListener('click', cancelDialog);
+rainbowSwitch.addEventListener('change', toggleRainbowMode);
