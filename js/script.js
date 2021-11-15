@@ -1,7 +1,3 @@
-// TODO: rainbow color mode toggle
-// TODO: trace history button (store one, in order - button to replay? replay mode?)
-
-// query selectors
 let wrapper = document.querySelector('#wrapper');
 let clearBtn = document.querySelector('#clear-grid');
 let editGridBtn = document.querySelector('#edit-grid');
@@ -19,7 +15,6 @@ let squares = [];
 
 let dialogIsOpen = false;
 let resolution = 50;
-
 let currentHue = 0;
 let rainbowModeIsToggled = false;
 
@@ -94,8 +89,8 @@ function openDialog() {
     slider.value = resolution;
     dialogStatus.textContent = resolution;
     overlay.classList.remove('overlay-fade-out');
-    overlay.classList.add('overlay-fade-in');
     dialog.classList.remove('dialog-fade-out');
+    overlay.classList.add('overlay-fade-in');
     dialog.classList.add('dialog-fade-in');
 }
 
@@ -104,16 +99,16 @@ function closeDialog() {
     clearSquares();
     dialogIsOpen = false;
     overlay.classList.remove('overlay-fade-in');
-    overlay.classList.add('overlay-fade-out');
     dialog.classList.remove('dialog-fade-in');
+    overlay.classList.add('overlay-fade-out');
     dialog.classList.add('dialog-fade-out');
 }
 
 function cancelDialog() {
     dialogIsOpen = false;
     overlay.classList.remove('overlay-fade-in');
-    overlay.classList.add('overlay-fade-out');
     dialog.classList.remove('dialog-fade-in');
+    overlay.classList.add('overlay-fade-out');
     dialog.classList.add('dialog-fade-out');
 }
 
